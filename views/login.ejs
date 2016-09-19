@@ -19,18 +19,6 @@
 </head>
 <body>
 <div class="container">
-    <!-- Codrops top bar
-    <div class="codrops-top">
-        <a href="">
-            <strong>&laquo; Previous Demo: </strong>Responsive Content Navigator
-        </a>
-        <span class="right">
-                    <a href=" http://tympanus.net/codrops/2012/03/27/login-and-registration-form-with-html5-and-css3/">
-                        <strong>Back to the Codrops Article</strong>
-                    </a>
-                </span>
-        <div class="clr"></div>
-    </div>/ Codrops top bar -->
     <section>
         <div id="container_demo" >
             <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
@@ -38,11 +26,11 @@
             <a class="hiddenanchor" id="tologin"></a>
             <div id="wrapper">
                 <div id="login" class="animate form">
-                    <form  action="mysuperscript.php" autocomplete="on">
+                    <form  action="mysuperscript.php" autocomplete="on" onsubmit="return signUp()">
                         <h1>登录</h1>
                         <p>
                             <label for="username" class="uname" data-icon="u" >用户名</label>
-                            <input id="username" name="username" required="required" type="text" placeholder="请输入邮箱"/>
+                            <input id="username" name="username" required="required" type="text" placeholder="请输入用户名"/>
                         </p>
                         <p>
                             <label for="password" class="youpasswd" data-icon="p">密码</label>
@@ -63,7 +51,7 @@
                 </div>
 
                 <div id="register" class="animate form">
-                    <form  action="mysuperscript.php" autocomplete="on">
+                    <form id="registerForm" autocomplete="on" onsubmit="signUp()">
                         <h1> 注册 </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">用户名</label>
@@ -95,5 +83,41 @@
         </div>
     </section>
 </div>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/lodash.js"></script>
+<script>
+    $.fn.serializeObject = function()
+    {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+    function signUp(){
+        var formData = $("#registerForm").serializeObject();
+        var Data = {username: formData.usernamesignup, password: formData.passwordsignup, email: formData.emailsignup};
+        $.ajax({
+            type:'post',
+            url:'/login',
+            data:Data,
+            success:function(data){
+                if(data=='success'){
+                    alert('成功');
+                }else{
+                    alert('失败');
+                }
+            }
+        })
+    }
+</script>
 </body>
 </html>
