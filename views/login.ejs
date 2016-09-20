@@ -26,7 +26,7 @@
             <a class="hiddenanchor" id="tologin"></a>
             <div id="wrapper">
                 <div id="login" class="animate form">
-                    <form  action="mysuperscript.php" autocomplete="on" onsubmit="return signUp()">
+                    <form id="loginForm" method="post" autocomplete="on" onsubmit="return loginUp()">
                         <h1>登录</h1>
                         <p>
                             <label for="username" class="uname" data-icon="u" >用户名</label>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div id="register" class="animate form">
-                    <form id="registerForm" autocomplete="on" onsubmit="signUp()">
+                    <form id="registerForm" autocomplete="on" onsubmit="return signUp()">
                         <h1> 注册 </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">用户名</label>
@@ -107,7 +107,7 @@
         var Data = {username: formData.usernamesignup, password: formData.passwordsignup, email: formData.emailsignup};
         $.ajax({
             type:'post',
-            url:'/login',
+            url:'/register',
             data:Data,
             success:function(data){
                 if(data=='success'){
@@ -117,6 +117,25 @@
                 }
             }
         })
+        return false;
+    }
+
+    function loginUp(){
+        var formData = $("#loginForm").serializeObject();
+        var Data = {username: formData.username, password: formData.password};
+        $.ajax({
+            type:'get',
+            url:'/loginUp',
+            data:Data,
+            success:function(data){
+                if(data=='success'){
+                    window.location.href = "/";
+                }else if(data=='fail'){
+                    alert('失败');
+                }
+            }
+        })
+        return false;
     }
 </script>
 </body>

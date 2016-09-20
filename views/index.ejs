@@ -4,6 +4,7 @@
 	<title>Home</title>
 	<link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
 	<link href="/css/style.css" rel='stylesheet' type='text/css' />
+	<link href="/css/tz_page.css" rel='stylesheet' type='text/css' />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Blogname Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
@@ -12,7 +13,8 @@
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 	<!----webfonts---->
 		<!----//webfonts---->
-		  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/tz_page.js"></script>
 		<!--end slider -->
 		<!--script-->
 <script type="text/javascript" src="/js/move-top.js"></script>
@@ -44,6 +46,12 @@
 						<li class="active"><a href="index.ejs">主页</a></li>
 						<li><a href="contact.ejs">联系</a></li>
 						<li><a href="terms.ejs">团队</a></li>
+					   <% if(user){ %>
+					    	<li><a href="javascript:void(0)"><%=user.username%></a></li>
+					   		<li><a href="/logout">注销</a></li>
+					   <% }else{ %>
+					   		<li><a href="/login">登录</a></li>
+					   <% } %>
 						<div class="clearfix"> </div>
 				 </ul>
 			 </div>
@@ -65,8 +73,6 @@
 		 <div class="banner-links">
 			 <ul>
 				 <li class="active"><a href="#">LOREM IPSUM</a></li>
-				 <li><a href="#">DOLAR SITE AMET</a></li>
-				 <li><a href="#">MORBI IN SEM</a></li>
 				 <div class="clearfix"></div>
 			 </ul>
 		 </div>
@@ -109,19 +115,13 @@
 							 <img src="/images/c3.jpg" alt=""/>
 							 <a class="bttn" href="single.ejs">MORE</a>
 					 </div>
-				 </div>				 
-				 <div class="pages">
-					 <ul>
-						 <li class="active"><a href="#">1</a></li>
-						 <li><a href="#">2</a></li>
-						 <li><a href="#">3</a></li>
-						 <li><a href="#">4</a></li>
-						 <li><a href="#">5</a></li>
-						 <li><a href="#">6</a></li>
-						 <li><a href="#">Previous</a></li>
-						 <li><a href="#">Next</a></li>
-					 </ul>
-				 </div>				 
+				 </div>
+				 <!--分页开始-->
+				 <input type="hidden" value="">
+				 <div id="page" class="pages">
+				
+
+				 </div>
 			 </div>
 			 
 			 <div class="col-md-4 content-main-right">
@@ -180,6 +180,7 @@
 <!---->
 <script type="text/javascript">
 		$(document).ready(function() {
+			$("#page").tzPage();
 				/*
 				var defaults = {
 				containerID: 'toTop', // fading element id
@@ -192,7 +193,6 @@
 });
 </script>
 <a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
-
 
 
 </body>
