@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(loginFilter());
 
-app.use('/', routes);
+app.use(routes); //首页内容路由
 app.use('/users', users);
 app.use(login); //登录 注册页面路由
 // catch 404 and forward to error handler

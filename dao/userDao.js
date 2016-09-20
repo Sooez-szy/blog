@@ -35,6 +35,7 @@ module.exports = {
             )
         })
     },
+    //用户名密码匹配账户
     queryName:function(req, res, next){
         pool.getConnection(function(err,connection){
             var param = req.query;

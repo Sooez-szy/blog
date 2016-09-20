@@ -1,0 +1,13 @@
+<%if(articles){%>
+    <% articles.forEach(function(article){ %>
+    <div class="content-grid-sec">
+        <div class="content-sec-info">
+            <h3><a href="single.ejs"><%=article.title%></a></h3>
+            <h4>Jul 23, 2014, Posted by : <a href="#"><%=article.author%></a></h4>
+            <p><%=article.description%></p>
+            <img src="/images/c2.jpg" alt=""/>
+            <a class="bttn" href="single.ejs">MORE</a>
+        </div>
+    </div>
+    <%})%>
+<% } %>

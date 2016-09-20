@@ -83,8 +83,8 @@
 <div class="content">
 	 <div class="container">
 		 <div class="content-grids">
-			 <div class="col-md-8 content-main">
-				 <div class="content-grid">
+			 <div  class="col-md-8 content-main">
+				 <!--<div class="content-grid">
 					 <div class="content-grid-head">
 						 <h3>POST OF THE DAY</h3>
 						 <h4>July 24, 2014,Posted by: <a href="#">Admin</a></h4>
@@ -96,28 +96,11 @@
 						 <img src="/images/c1.jpg" alt=""/>
 						 <a class="bttn" href="single.ejs">MORE</a>
 					</div>
-				 </div>
-				 
-				 <div class="content-grid-sec">
-					 <div class="content-sec-info">
-							 <h3><a href="single.ejs">ALIQUAM TINCIDUNT MAURI</a></h3>
-							 <h4>Jul 23, 2014, Posted by : <a href="#">Admin</a></h4>
-							 <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-							 <img src="/images/c2.jpg" alt=""/>
-							 <a class="bttn" href="single.ejs">MORE</a>
-					 </div>
-				 </div>
-				 <div class="content-grid-sec">
-					 <div class="content-sec-info">
-							 <h3><a href="single.ejs">VESTIBULUM COMMODO FELIS</a></h3>
-							 <h4>Jul 23, 2014, Posted by : <a href="#">Admin</a></h4>
-							 <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-							 <img src="/images/c3.jpg" alt=""/>
-							 <a class="bttn" href="single.ejs">MORE</a>
-					 </div>
-				 </div>
+				 </div>-->
+				<div id="articleContent"></div>
+
 				 <!--分页开始-->
-				 <input type="hidden" value="">
+				 <input id="countInput" type="hidden" value="<%= count %>">
 				 <div id="page" class="pages">
 				
 
@@ -180,15 +163,34 @@
 <!---->
 <script type="text/javascript">
 		$(document).ready(function() {
-			$("#page").tzPage();
-				/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-				*/
+			var pageCount = $("#countInput").val();
+			$("#page").tzPage(pageCount,{
+				num_edge_entries : 1, //边缘页数
+				num_display_entries :4, //主体页数
+				num_edge_entries:5,
+				current_page:0,
+				showGo:true,
+				showSelect:true,
+				items_per_page : 3, //每页显示X项
+				prev_text : "前一页",
+				next_text : "后一页",
+				callback : function(pageNo,psize){//回调函数
+					loadData(pageNo*psize,psize);
+				}
+			});
+			function loadData(pageNo,psize){
+				var opid = $("body").data("opid");
+				console.log(pageNo)
+				$.ajax({
+					type:'post',
+					url:"/article",
+					data:{"pageNo":pageNo,"pageSize":psize},
+					success:function(data){
+						$("#articleContent").html(data);
+					}
+				})
+			}
+			loadData(0,3)
 		$().UItoTop({ easingType: 'easeOutQuart' });
 });
 </script>

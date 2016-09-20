@@ -13,16 +13,34 @@ var pool = mysql.createPool(db.mysql);
 
 module.exports = {
     queryAll: function (req, res, next) {
+        var param = req.body;
         pool.getConnection(function (err, connection) {
             connection.query(
                 sql.queryAll,
-                [],
+                [req.session.user.username,parseInt(param.pageNo),parseInt(param.pageSize)],
                 function (err, rows) {
                     if (err) {
                         console.log('query err' + err)
                     } else {
-
+                        res.render('articleTemplete',{articles:rows});
                     }
+                    connection.release();
+                }
+            )
+        });
+    },
+    queryAllCount:function(req,res,next){
+        pool.getConnection(function (err, connection) {
+            connection.query(
+                sql.queryAllCount,
+                [req.session.user.username],
+                function (err, rows) {
+                    if (err) {
+                        console.log('query err' + err)
+                    } else {
+                        res.render('index',{user:req.session.user,count:rows[0]['count(0)']});
+                    }
+                    connection.release();
                 }
             )
         });
