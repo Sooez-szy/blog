@@ -15,8 +15,8 @@ module.exports = {
     queryAll: function (req, res, next) {
         var param = req.body;
         pool.getConnection(function (err, connection) {
-            sql.queryAll,
-                connection.query(
+             connection.query(
+                 sql.queryAll,
                 [req.session.user.username,parseInt(param.pageNo),parseInt(param.pageSize)],
                 function (err, rows) {
                     if (err) {
@@ -44,5 +44,23 @@ module.exports = {
                 }
             )
         });
+    },
+    queryById:function(req,res,next){
+        var param = req.query;
+        pool.getConnection(function (err, connection) {
+            connection.query(
+                sql.queryById,
+                [param.id],
+                function (err, rows) {
+                    if (err) {
+                        console.log('query err' + err)
+                    } else {
+                        res.render('single',{article:rows[0]});
+                    }
+                    connection.release();
+                }
+            )
+        });
     }
+
 };

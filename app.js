@@ -24,14 +24,17 @@ app.use(bodyParser.json());
 app.use(session({
   secret: '12345',
   name: 'testapp',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
-  cookie: {maxAge: 80000},  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+  cookie: {maxAge: 8000000000000},  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
   resave: false,
   saveUninitialized: true
 }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(loginFilter());
-
+app.use(function(req, res, next){
+  res.locals.user = req.session.user;
+  next();
+});
 app.use(routes); //首页内容路由
 app.use('/users', users);
 app.use(login); //登录 注册页面路由

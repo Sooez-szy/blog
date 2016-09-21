@@ -13,7 +13,12 @@ router.get('/', function(req, res, next) {
 
 //首页文章模板路由
 router.route('/article').post(function(req, res, next) {
-  articleDao.queryAll(req,res,next);
+    articleDao.queryAll(req,res,next);
+});
+
+//首页文章详情路由
+router.route('/single').get(function(req, res, next) {
+    articleDao.queryById(req,res,next);
 });
 
 module.exports = router;
