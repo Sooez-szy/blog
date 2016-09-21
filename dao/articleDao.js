@@ -15,8 +15,8 @@ module.exports = {
     queryAll: function (req, res, next) {
         var param = req.body;
         pool.getConnection(function (err, connection) {
-            connection.query(
-                sql.queryAll,
+            sql.queryAll,
+                connection.query(
                 [req.session.user.username,parseInt(param.pageNo),parseInt(param.pageSize)],
                 function (err, rows) {
                     if (err) {
