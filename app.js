@@ -21,6 +21,9 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
+/**
+ * 初始化化session
+ */
 app.use(session({
   secret: '12345',
   name: 'testapp',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
@@ -30,7 +33,13 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+/**
+ * 登录拦截
+ */
 app.use(loginFilter());
+/**
+ * 将session数据存放全局，ejs可取
+ */
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
